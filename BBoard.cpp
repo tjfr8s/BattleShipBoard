@@ -9,6 +9,8 @@
 #include "BBoard.hpp"
 BBoard::BBoard()
 {
+    // Initialize m_unsunk to 0, m_attacked array elements to 
+    // false, and m_shipLocations array elements to nullptr.
     m_unsunk = 0;
     for(int i = 0; i < 10; i++)
     {
@@ -47,7 +49,7 @@ int BBoard::getNumShipsRemaining()
  * doesn't overlap another ship the function places the 
  * ship and returns true. Otherwise, it returns false.
 ************************************************************/
-bool BBoard::placeShip(Ship& ship,
+bool BBoard::placeShip(Ship* ship,
                        int row,
                        int col,
                        char orientation)
@@ -55,37 +57,37 @@ bool BBoard::placeShip(Ship& ship,
     bool shipPlaced = false;
     int squaresPlaced = 0;
     
-    // Check bounds of board array when placing whip in a 
+    // Check bounds of board array when placing ship in a 
     // row or column. 
     if(orientation == 'C' 
-       && (row + ship.getLength() -1 < 10)
+       && (row + ship->getLength() -1 < 10)
        && row >= 0)
     {
         shipPlaced = true;
     }
     else if(orientation == 'R' 
-            && (col + ship.getLength() -1< 10)
+            && (col + ship->getLength() -1< 10)
             && row >= 0)
     {
         shipPlaced = true;
     } 
 
-    // Place ship address in each squre that the ship will occupy
-    while((squaresPlaced < ship.getLength()) && shipPlaced)
+    // Place ship address in each squre that the ship will occupy.
+    while((squaresPlaced < ship->getLength()) && shipPlaced)
     {
         // Place ship and increment index according to ship
         // orientation.
         if(orientation == 'C' 
            && m_shipLocations[row][col] == nullptr)
         {
-            m_shipLocations[row][col] = &ship; 
+            m_shipLocations[row][col] = ship;
             row++;
             squaresPlaced++;
         }
         else if(orientation == 'R'
                 && m_shipLocations[row][col] == nullptr)
         {
-            m_shipLocations[row][col] = &ship;
+            m_shipLocations[row][col] = ship;
             col++;
             squaresPlaced++;
         }
@@ -154,6 +156,10 @@ bool BBoard::attack(int row, int col)
 }
 
 
+/************************************************************
+ * Description: This function prints the board with ships,
+ * missed attacks, and successful attacks.
+************************************************************/
 void BBoard::printBoard()
 {
     for(int row = 0; row < 10; row++)
@@ -174,5 +180,21 @@ void BBoard::printBoard()
                 std::cout << 'x';
         }
         std::cout << '\n';
+    }
+}
+
+
+/************************************************************
+ * Description: Returns true if all ships have been sunk
+************************************************************/
+bool BBoard::allShipsSunk()
+{
+    if(m_unsunk == 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }

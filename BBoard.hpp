@@ -23,7 +23,7 @@ public:
     Ship* getShipsArrayElement(int row, int col);
     int getNumShipsRemaining();
 
-    bool placeShip(Ship& ship, 
+    bool placeShip(Ship* ship, 
                    int row, 
                    int col, 
                    char orientation);
@@ -31,6 +31,7 @@ public:
     void printBoard();
 
     bool attack(int row, int col);
+    bool allShipsSunk();
 
 
 };
