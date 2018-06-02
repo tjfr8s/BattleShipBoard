@@ -34,7 +34,7 @@ void BBoardTest::checkPlacement(BBoard& board,
                                 int col, 
                                 char orientation)
 {
-    EXPECT_EQ(true, board.placeShip(ship, row, col, orientation))
+    EXPECT_EQ(true, board.placeShip(&ship, row, col, orientation))
               << "failure to place ship in row orientation"
               << ", not edge of board";
 
@@ -87,10 +87,10 @@ TEST_F(BBoardTest, ShipPlacementColEdge2)
 
 TEST_F(BBoardTest, ShipPlacementOverlap)
 {
-    board.placeShip(battleship1, 4, 4, 'R');
+    board.placeShip(&battleship1, 4, 4, 'R');
     for(int i = 0; i < battleship1.getLength(); i++)
     {
-        EXPECT_EQ(false, board.placeShip(battleship2, 4 - i, 4 + i, 'C'))
+        EXPECT_EQ(false, board.placeShip(&battleship2, 4 - i, 4 + i, 'C'))
                   << "Placed ship on top of another.";
     }
 }
@@ -98,7 +98,7 @@ TEST_F(BBoardTest, ShipPlacementOverlap)
 
 TEST_F(BBoardTest, AttackFunctional)
 {
-    board.placeShip(battleship1, 2, 2, 'R');
+    board.placeShip(&battleship1, 2, 2, 'R');
 
     EXPECT_EQ(1, board.getNumShipsRemaining())
               << "Incorrect number ships recorded.";    
@@ -132,8 +132,24 @@ TEST_F(BBoardTest, AttackFunctional)
     EXPECT_EQ(true, board.getAttacksArrayElement(0, 0))
               << "Attack on open water not recorded";
 
-    board.printBoard();
+    //board.printBoard();
     std::cout << "\n";
+}
+
+TEST_F(BBoardTest, AllShipsSunkFunctional)
+{
+    EXPECT_EQ(true, board.allShipsSunk())
+              << "allShipsSunk returning false when there are no ships.";
+    
+    board.placeShip(&destroyer1, 0, 0, 'R');
+
+    EXPECT_EQ(false, board.allShipsSunk())
+              << "allShipsSunk returning true when there are still ships.";
+}
+
+TEST(BBoard2, Test)
+{
+    EXPECT_EQ(true, true);
 }
 
 /*
