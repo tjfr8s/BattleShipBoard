@@ -142,7 +142,7 @@ bool BBoard::attack(int row, int col)
         {
             m_unsunk--;
             std::cout << "They sank " << shipLocation->getName() 
-                      << "!";
+                      << "!\n";
         }
     }
     // Hits on previously hit squares still count as true.
