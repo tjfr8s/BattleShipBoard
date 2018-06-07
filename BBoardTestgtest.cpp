@@ -131,6 +131,9 @@ TEST_F(BBoardTest, AttackFunctional)
 
     EXPECT_EQ(true, board.getAttacksArrayElement(0, 0))
               << "Attack on open water not recorded";
+   
+    EXPECT_EQ(false, board.attack(0, 0))
+              << "Attack returned true when empty square was attacked.";
 
     //board.printBoard();
     std::cout << "\n";
