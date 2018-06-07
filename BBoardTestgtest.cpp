@@ -76,12 +76,14 @@ TEST_F(BBoardTest, ShipPlacementColNEdge2)
 TEST_F(BBoardTest, ShipPlacementRowEdge2)
 {
     checkPlacement(board, destroyer1, 1, 8, 'R');
+    EXPECT_EQ(false, board.placeShip(&destroyer1, 1, 9, 'R'));
 }
 
 
 TEST_F(BBoardTest, ShipPlacementColEdge2)
 {
     checkPlacement(board, carrier1, 5, 1, 'C');
+    EXPECT_EQ(false, board.placeShip(&carrier1, 6, 1, 'C'));
 }
 
 
